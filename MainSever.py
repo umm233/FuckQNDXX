@@ -9,9 +9,11 @@ def get_chinese(s):
     return digit[s]
 
 def download(url,s,e):
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'}
     down_path = "./static/img/qndxx/"+s+e+".jpg"
     if not os.path.isfile(down_path):
-        re=r.get(url)
+        re=r.get(url, headers=headers)
         with open(down_path, "wb+") as f:
             f.write(re.content)
     else:
@@ -41,4 +43,4 @@ def fake_pic():
     return render_template('fake_pic.html', pic_src='img/qndxx/latest.jpg',s=get_chinese(s),e=e)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='127.0.0.1',port=5000)
