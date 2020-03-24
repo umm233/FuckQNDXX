@@ -1,16 +1,21 @@
 from flask import Flask, request, render_template,send_file
 import requests as r
-def download(url,s,e):
-    re=r.get(url)
-    with open("./static/img/qndxx/"+s+e+".jpg","wb+") as f:
-        f.write(re.content)
+import os
+
+from genHead import make_head
 
 def get_chinese(s):
     digit = {'0':'零','1':'一','2':'二','3':'三','4':'四','5':'五','6':'六','7':'七','8':'八','9':'九'}
     return digit[s]
 
-
-    
+def download(url,s,e):
+    down_path = "./static/img/qndxx/"+s+e+".jpg"
+    if not os.path.isfile(down_path):
+        re=r.get(url)
+        with open(down_path, "wb+") as f:
+            f.write(re.content)
+    else:
+        pass
 
 app = Flask(__name__)
 
@@ -28,8 +33,12 @@ def fake_pic():
         return render_template('index.html',message="前两季暂时没有收录。")
     convert=['0', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
     url=r"http://h5.cyol.com/special/daxuexi/daxuexi"+s+convert[int(e)]+e+r"/images/end.jpg"
+    print(url)
     download(url,s,e)
-    return render_template('fake_pic.html', pic_src='img/qndxx/'+s+e+'.jpg',s=get_chinese(s),e=e)   
+
+    down_img = "./static/img/qndxx/"+s+e+".jpg"
+    make_head(down_img, get_chinese(s), get_chinese(e))
+    return render_template('fake_pic.html', pic_src='img/qndxx/latest.jpg',s=get_chinese(s),e=e)
 
 if __name__ == '__main__':
     app.run()
