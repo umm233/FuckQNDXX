@@ -32,7 +32,7 @@ def draw_head(season, episode):
     draw.text((60, 20), title, color, font=font)
     draw.text((750,9), dots,color,font=font_dot)
     # img.show()
-    img.save("head.jpg")
+    img.save("./static/img/qndxx/head.jpg")
 
 def merge(img1, down_path):
     img1, down_img = Image.open(img1), Image.open(down_path)
@@ -46,9 +46,8 @@ def merge(img1, down_path):
 
 def make_head(down_img, season, episode):
     draw_head(season, episode)
-    head = "head.jpg"
-    merge(head, down_img)
+    head_img = "./static/img/qndxx/head.jpg"
+    merge(head_img, down_img)
 
 if __name__ == '__main__':
     make_head()
-
