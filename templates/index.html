@@ -5,9 +5,10 @@
     <title>QNDXX截图生成器</title>
     <meta name="viewport"
         content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
-<body background={{url_for('.static',_external=True,filename="img/bg.jpg")}}>
+<body background= "{{ url_for( 'static', filename='img/bg.jpg' ) }}" >
     <style>
         .smart-green {
             margin-left: auto;
@@ -103,12 +104,12 @@
             margin-bottom: 10px;
         }
     </style>
-        <form class="smart-green" method="post">
-            <table  border="1"  border="red" width="350">
+    <form class="smart-green" method="post">
+        <table  border="1"  border="red" width="350">
             <h1>青年大学习截图获取</h1>
             <tr>
                   <td height="50" width="50">季数：</td>
-                  <td><input class="textarea" name="s" type="number" id="s" value="7" maxlength="2" size="50" pattern="[0-9]" /></td>
+                  <td><input class="textarea" name="s" type="number" id="s" value="8" maxlength="2" size="50" pattern="[0-9]" /></td>
 				{% if message %}
 					<p style="color:red">{{ message }}</p>
 				{% endif %}
@@ -118,13 +119,12 @@
                   <td height="50" width="50">期数：</td>
                  <td><input class="textarea" name="e" type="number" id="e"  maxlength="2" size="50" pattern="[0-9]" /></td>
             </tr>
-            <table>
+        </table>
 
-			<center>
-                <button class="button" type="submit" >要截图！</button>
-            </center>
-
+		<center>
+            <button class="button" type="submit" >要截图！</button><br/>
+            <a href="https://github.com/umm233/FuckQNDXX" target="_blank">Github</a>
+        </center>
     </form>
-
 </body>
 </html>
