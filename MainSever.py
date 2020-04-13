@@ -4,6 +4,7 @@
 from flask import Flask, request, render_template, send_file
 import requests as r
 import os
+import re
 
 from genHead import make_head
 
@@ -24,7 +25,7 @@ def get_chinese(s):
     return digit[s]
 
 
-def download(url, s, e):
+def download(pageUrl, s, e):
     headers = {
         'User-Agent':
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'
@@ -33,8 +34,7 @@ def download(url, s, e):
     if os.path.isfile(down_path):
         pass
     else:
-        re = r.get(url, headers=headers)
-        print(re.status_code)
+        re = r.get(pageUrl, headers=headers)
         if re.status_code == 200:
             with open(down_path, "wb+") as f:
                 f.write(re.content)
@@ -54,16 +54,18 @@ def index():
 def fake_pic():
     s = str(request.form['s'])
     e = str(request.form['e'])
-    if (not (5 < int(s) < 20 and 0 < int(e) < 20)) or s == "" or e == "":
-        return render_template('index.html', message="错误的查询范围。")
+    pageUrl = str(request.form['pageUrl'])
 
-    convert = [
-        '0', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd',
-        'f', 'g', 'h', 'j', 'k', 'l'
-    ]
-    url = r"http://h5.cyol.com/special/daxuexi/daxuexi" + s + convert[int(
-        e)] + e + r"/images/end.jpg"
-    download(url, s, e)
+    # 输入pageUrl，以下载对应图片
+    if pageUrl:
+        re_url = re.findall(r'(\d\w{8}\d)', pageUrl)[0]
+        url = "http://h5.cyol.com/special/daxuexi/" + re_url + r"/images/end.jpg"
+        s = re_url[0]
+        e = re_url[-1]
+        download(url, s, e)
+
+    elif (s == "" or e == "" or (not (5 < int(s) < 20 and 0 < int(e) < 20))):
+        return render_template('index.html', message="错误的查询范围。")
 
     down_img = "./static/img/qndxx/" + s + e + ".jpg"
     if os.path.isfile(down_img):
