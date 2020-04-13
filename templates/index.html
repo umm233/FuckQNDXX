@@ -8,12 +8,12 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
-<body background= "{{ url_for( 'static', filename='img/bg.jpg' ) }}" >
+<body background="{{ url_for( 'static', filename='img/bg.jpg' ) }}">
     <style>
         .smart-green {
             margin-left: auto;
             margin-right: auto;
-            max-width: 350px;
+            max-width: 450px;
             background: #F8F8F8;
             padding: 30px 30px 20px 30px;
             font: 16px Arial, Helvetica, sans-serif;
@@ -105,26 +105,36 @@
         }
     </style>
     <form class="smart-green" method="post">
-        <table  border="1"  border="red" width="350">
+        <table  border="1"  border="red" width="450">
             <h1>青年大学习截图获取</h1>
             <tr>
-                  <td height="50" width="50">季数：</td>
-                  <td><input class="textarea" name="s" type="number" id="s" value="8" maxlength="2" size="50" pattern="[0-9]" /></td>
-				{% if message %}
-					<p style="color:red">{{ message }}</p>
-				{% endif %}
-				<h3 style="display:none" id="thanks">谢谢您</h3>
+                <td height="50" width="50">季数：</td>
+                <td>
+                    <input class="textarea" name="s" type="number" id="s" value="8" maxlength="2" pattern="[1-9]" />
+                </td>
+                {% if message %}
+                <p style="color:red">{{ message }}</p>
+                {% endif %}
             </tr>
             <tr>
-                  <td height="50" width="50">期数：</td>
-                 <td><input class="textarea" name="e" type="number" id="e"  maxlength="2" size="50" pattern="[0-9]" /></td>
+                <td height="50" width="50">期数：</td>
+                <td><input class="textarea" name="e" type="number" id="e" maxlength="2" pattern="[1-9]" />
+                </td>
+            </tr>
+            <tr>
+                <td height="50" width="100">链接：(可选)</td>
+                <td>
+                    <input class="textarea" name="pageUrl" type="string" id="pageUrl" maxlength="100" size="30" />
+                </td>
             </tr>
         </table>
 
-		<center>
-            <button class="button" type="submit" >要截图！</button><br/>
+        <center>
+            <button class="button" type="submit">要截图！</button><br />
             <a href="https://github.com/umm233/FuckQNDXX" target="_blank">Github</a>
         </center>
     </form>
+
 </body>
+
 </html>
