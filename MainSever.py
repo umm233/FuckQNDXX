@@ -58,13 +58,16 @@ def fake_pic():
 
     # 输入pageUrl，以下载对应图片
     if pageUrl:
-        re_url = re.findall(r'(\d\w{8}\d)', pageUrl)[0]
+        re_url = re.findall(r'(\w{10})', pageUrl)[0]
+        se = re.findall(r'\d', re_url)
+        s = se[0]
+        e = se[1]
+
+        # generate pic url and download
         url = "http://h5.cyol.com/special/daxuexi/" + re_url + r"/images/end.jpg"
-        s = re_url[0]
-        e = re_url[-1]
         download(url, s, e)
 
-    elif (s == "" or e == "" or (not (5 < int(s) < 20 and 0 < int(e) < 20))):
+    elif (s == "" or e == "" or (not (0 < int(s) < 20 and 0 < int(e) < 20))):
         return render_template('index.html', message="错误的查询范围。")
 
     down_img = "./static/img/qndxx/" + s + e + ".jpg"
