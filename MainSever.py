@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template
 import requests as r
 import os
 import re
@@ -82,6 +82,10 @@ def fake_pic():
 
 
 if __name__ == '__main__':
+    from datetime import timedelta
+    # clear cache
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
+
     # from waitress import serve
     # serve(app, host='0.0.0.0', port=5000)
 
