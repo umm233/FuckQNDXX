@@ -7,22 +7,6 @@ from PIL import Image, ImageDraw, ImageFont
 import random, os
 
 
-def get_chinese(s):
-    digit = {
-        '0': '零',
-        '1': '一',
-        '2': '二',
-        '3': '三',
-        '4': '四',
-        '5': '五',
-        '6': '六',
-        '7': '七',
-        '8': '八',
-        '9': '九'
-    }
-    return digit[s]
-
-
 def get_random_font():
     font_list = os.listdir("./font")
     font_name = font_list[random.randint(0, len(font_list) - 1)]
