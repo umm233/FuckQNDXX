@@ -2,27 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, request, render_template
+from num2chinese import num2chinese
 import requests as r
-import os
-import re
+import os, re
 
 from genHead import make_head
-
-
-def get_chinese(s):
-    digit = {
-        '0': '零',
-        '1': '一',
-        '2': '二',
-        '3': '三',
-        '4': '四',
-        '5': '五',
-        '6': '六',
-        '7': '七',
-        '8': '八',
-        '9': '九'
-    }
-    return digit[s]
 
 
 def download(pageUrl, s, e):
@@ -58,8 +42,8 @@ def fake_pic():
 
     # 输入pageUrl，以下载对应图片
     if pageUrl:
-        re_url = re.findall(r'(\w{10})', pageUrl)[0]
-        se = re.findall(r'\d', re_url)
+        re_url = re.findall(r'daxuexi/(\w+)/', pageUrl)[0]
+        se = re.findall(r'\d+', re_url)
         s = se[0]
         e = se[1]
 
@@ -72,10 +56,10 @@ def fake_pic():
 
     down_img = "./static/img/qndxx/" + s + e + ".jpg"
     if os.path.isfile(down_img):
-        make_head(down_img, get_chinese(s), get_chinese(e))
+        make_head(down_img, num2chinese(s), num2chinese(e))
         return render_template('fake_pic.html',
                                pic_src='img/qndxx/latest.jpg',
-                               s=get_chinese(s),
+                               s=num2chinese(s),
                                e=e)
     else:
         return render_template('404.html')
